@@ -49,6 +49,7 @@ export const IconButtonWrapper = styled.div`
 
 export const Filters = styled.div`
   display: flex;
+  width: 500px;
   justify-content: center;
   & > * {
     margin-inline-end: 8px;

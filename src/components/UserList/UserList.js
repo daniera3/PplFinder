@@ -6,8 +6,13 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 
-const UserList = ({ users, isLoading }) => {
+
+const UserList = ({ users, isLoading,favorites, setFavorits }) => {
   const [hoveredUserId, setHoveredUserId] = useState();
+  const [selectCountrys,setselectCountrys]= useState([]);
+  const [selectedUsers, setSelectedUsers]= useState(users);
+
+  const countrys=Array.from(new Set(users.map(user=>user?.location.country)));
 
   const handleMouseEnter = (index) => {
     setHoveredUserId(index);
@@ -17,16 +22,46 @@ const UserList = ({ users, isLoading }) => {
     setHoveredUserId();
   };
 
+  const handleCheck= country=>{
+    if (selectCountrys.indexOf(country)!==-1)
+      setselectCountrys(selectCountrys.filter(selectCountry=>selectCountry!==country));
+    else
+      setselectCountrys([...selectCountrys,country]);
+  }
+
+  const handleClick =(index) =>{
+
+    if (favorites.indexOf(selectedUsers[index])!==-1)
+      setFavorits(favorites.filter(favorite=>favorite!==selectedUsers[index]));
+    else
+      setFavorits([...favorites,selectedUsers[index]]);
+  }
+  
+
+  useEffect(()=>
+    {
+      if(selectCountrys&& users && !selectCountrys.length)
+        setSelectedUsers(users);     
+      else
+        setSelectedUsers(users.filter(user =>selectCountrys.includes(user?.location.country) ))
+    }
+    ,[selectCountrys,users])
+
   return (
     <S.UserList>
       <S.Filters>
-        <CheckBox value="BR" label="Brazil" />
+        {/* <CheckBox value="BR" label="Brazil" />
         <CheckBox value="AU" label="Australia" />
         <CheckBox value="CA" label="Canada" />
-        <CheckBox value="DE" label="Germany" />
+        <CheckBox value="DE" label="Germany" /> */}
+         {countrys.map((country,index) => {
+          return (<CheckBox key={index} value={country} label={country} onChange={handleCheck} />)
+         })
+        }
       </S.Filters>
       <S.List>
-        {users.map((user, index) => {
+
+        {selectedUsers.map((user, index) => {
           return (
             <S.User
               key={index}
@@ -46,7 +81,7 @@ const UserList = ({ users, isLoading }) => {
                   {user?.location.city} {user?.location.country}
                 </Text>
               </S.UserInfo>
-              <S.IconButtonWrapper isVisible={index === hoveredUserId}>
+              <S.IconButtonWrapper  onClick={()=>{handleClick(index)}} isVisible={index === hoveredUserId ||favorites.indexOf(user)!==-1 }>
                 <IconButton>
                   <FavoriteIcon color="error" />
                 </IconButton>

@@ -1,24 +1,24 @@
 import React from "react";
 import Text from "components/Text";
 import UserList from "components/UserList";
-import { usePeopleFetch,useFavoritesFetch} from "hooks";
+import {useFavoritesFetch } from "hooks";
 import * as S from "./style";
 
-const Home = () => {
-  const { users, isLoading } = usePeopleFetch();
+const Favorites = () => {
   const {favorites,setFavorits} = useFavoritesFetch()
+
   return (
     <S.Home>
       <S.Content>
         <S.Header>
           <Text size="64px" bold>
-            PplFinder
+            Favorites
           </Text>
         </S.Header>
-        <UserList users={users} isLoading={isLoading} favorites={favorites} setFavorits={setFavorits} />
+        <UserList users={favorites??[]} isLoading={false} favorites={favorites??[]} setFavorits={setFavorits}/>
       </S.Content>
     </S.Home>
   );
 };
 
-export default Home;
+export default Favorites;
