@@ -13,14 +13,14 @@ export const usePeopleFetch = () => {
     setIsLoading(true);
     const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
     setIsLoading(false);
-    setUsers(response.data.results);
+    setUsers(Array.from(new Set(response.data.results)));
   }
 
   const fetchUsersAdd = async()=> {
     setIsLoading(true);
     const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
     setIsLoading(false);
-    setUsers([...users,...response.data.results]);
+    setUsers(Array.from(new Set([...users,...response.data.results])));
   }
 
 
