@@ -7,7 +7,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 
 
-const UserList = ({ users, isLoading,favorites, setFavorits }) => {
+const UserList = ({ users, isLoading,favorites, setFavorits,handleScroll }) => {
   const [hoveredUserId, setHoveredUserId] = useState();
   const [selectCountrys,setselectCountrys]= useState([]);
   const [selectedUsers, setSelectedUsers]= useState(users);
@@ -59,8 +59,7 @@ const UserList = ({ users, isLoading,favorites, setFavorits }) => {
          })
         }
       </S.Filters>
-      <S.List>
-
+      <S.List onScroll={handleScroll}>
         {selectedUsers.map((user, index) => {
           return (
             <S.User

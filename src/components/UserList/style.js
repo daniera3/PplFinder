@@ -12,7 +12,7 @@ export const List = styled.div`
   width: 500px;
   height: calc(100vh - 270px);
   margin-block-start: 30px;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 
 export const User = styled.div`
@@ -49,7 +49,7 @@ export const IconButtonWrapper = styled.div`
 
 export const Filters = styled.div`
   display: flex;
-  width: 500px;
+  width: 400px;
   justify-content: center;
   & > * {
     margin-inline-end: 8px;

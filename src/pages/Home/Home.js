@@ -4,9 +4,20 @@ import UserList from "components/UserList";
 import { usePeopleFetch,useFavoritesFetch} from "hooks";
 import * as S from "./style";
 
+
+
+
 const Home = () => {
-  const { users, isLoading } = usePeopleFetch();
+  const { users, isLoading, fetchUsersAdd } = usePeopleFetch();
   const {favorites,setFavorits} = useFavoritesFetch()
+  const handleScroll= e =>{
+      if (e.target.scrollHeight-e.target.scrollTop === e.target.clientHeight)
+      {
+        fetchUsersAdd();
+      }
+      
+  }
+
   return (
     <S.Home>
       <S.Content>
@@ -15,7 +26,7 @@ const Home = () => {
             PplFinder
           </Text>
         </S.Header>
-        <UserList users={users} isLoading={isLoading} favorites={favorites} setFavorits={setFavorits} />
+        <UserList users={users} isLoading={isLoading} favorites={favorites} setFavorits={setFavorits} handleScroll={handleScroll} />
       </S.Content>
     </S.Home>
   );
