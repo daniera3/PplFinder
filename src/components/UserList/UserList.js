@@ -30,8 +30,9 @@ const UserList = ({ users, isLoading,favorites, setFavorits,handleScroll }) => {
   }
 
   const handleClick =(index) =>{
-
-    if (favorites.indexOf(selectedUsers[index])!==-1)
+    if(!favorites)
+    setFavorits([selectedUsers[index]]);
+    else if (favorites.indexOf(selectedUsers[index])!==-1)
       setFavorits(favorites.filter(favorite=>favorite!==selectedUsers[index]));
     else
       setFavorits([...favorites,selectedUsers[index]]);
@@ -80,7 +81,7 @@ const UserList = ({ users, isLoading,favorites, setFavorits,handleScroll }) => {
                   {user?.location.city} {user?.location.country}
                 </Text>
               </S.UserInfo>
-              <S.IconButtonWrapper  onClick={()=>{handleClick(index)}} isVisible={index === hoveredUserId ||favorites.indexOf(user)!==-1 }>
+              <S.IconButtonWrapper  onClick={()=>{handleClick(index)}} isVisible={index === hoveredUserId ||(favorites&&favorites.indexOf(user)!==-1) }>
                 <IconButton>
                   <FavoriteIcon color="error" />
                 </IconButton>

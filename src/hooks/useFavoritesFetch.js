@@ -12,7 +12,7 @@ export const useFavoritesFetch = () => {
 
   async function storageFavorites() {
     if (!favorites){
-        setFavorits(JSON.parse(localStorage.getItem('favorites')))
+        setFavorits(JSON.parse(localStorage.getItem('favorites')||[]))
     }
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }
